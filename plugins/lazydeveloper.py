@@ -385,7 +385,7 @@ async def rename(client, message):
                 
                 for channel_id in CHANNELS:
                     try:
-                        await lazy_userbot.forward_messages(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_ids=msg.id)
+                        await msg.copy(channel_id)
                         print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
                         await asyncio.sleep(1)  # Short delay between channels
                     except Exception as e:
