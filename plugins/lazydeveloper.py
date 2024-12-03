@@ -1,7 +1,7 @@
 import asyncio
 from pyrogram import filters, Client
 from config import *
-from helpo.database import db 
+from lazydeveloperr.database import db 
 from asyncio.exceptions import TimeoutError
 
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
@@ -314,7 +314,7 @@ async def cancelled(msg):
 
 lock = asyncio.Lock()
 
-@Client.on_message(filters.command("send"))
+@Client.on_message(filters.command("post"))
 async def rename(client, message):
     user_id = message.from_user.id
 
@@ -363,6 +363,7 @@ async def rename(client, message):
     try:
         messages = []
         last_message_id = await db.get_skip_msg_id()  # Start fetching from the most recent message
+        print(f"The last message id got => {last_message_id}")
         async with lock:
             # Fetch messages in reverse order
             async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id):
@@ -385,7 +386,7 @@ async def rename(client, message):
                 
                 for channel_id in CHANNELS:
                     try:
-                        await msg.copy(channel_id)
+                        await lazy_userbot.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id)
                         print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
                         await asyncio.sleep(1)  # Short delay between channels
                     except Exception as e:
