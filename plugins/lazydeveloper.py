@@ -365,7 +365,7 @@ async def rename(client, message):
         last_message_id = await db.get_skip_msg_id()  # Start fetching from the most recent message
         async with lock:
             # Fetch messages in reverse order
-            for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id):
+            async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id):
                 if msg:  # Collect valid messages
                     messages.append(msg)
                     last_message_id = msg.id  # Update the last processed message ID
