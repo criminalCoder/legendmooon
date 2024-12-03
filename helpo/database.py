@@ -7,6 +7,7 @@ class Database:
         self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
         self.db = self._client[database_name]
         self.col = self.db.user
+        self.settings_col = self.db.settings  # New collection for settings like skip_msg_id
 
     def new_user(self, id):
         return dict(
