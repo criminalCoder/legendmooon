@@ -314,7 +314,7 @@ async def cancelled(msg):
 
 lock = asyncio.Lock()
 
-@Client.on_message(filters.command("/send"))
+@Client.on_message(filters.command("send"))
 async def rename(client, message):
     user_id = message.from_user.id
 
@@ -336,15 +336,15 @@ async def rename(client, message):
         text="Send Target Channel Id, From Where You Want Posts To Be Forwarded: in `-100XXXX` Format ",
         chat_id=message.chat.id
     )
-    
+
     target_chat_id = int(chat_id.text)
     print(f'✅Set target chat => {target_chat_id}' )
     
-    try:
-        chat_info = await client.get_chat(target_chat_id)
-    except Exception as e:
-        await client.send_message(message.chat.id, f"Something went wrong while accessing chat : {chat_info}")
-        print(f"Error accessing chat: {e}")
+    # try:
+    #     chat_info = await client.get_chat(target_chat_id)
+    # except Exception as e:
+    #     await client.send_message(message.chat.id, f"Something went wrong while accessing chat : {chat_info}")
+    #     print(f"Error accessing chat: {e}")
 
     await db.set_lazy_target_chat_id(message.from_user.id, target_chat_id)
 
