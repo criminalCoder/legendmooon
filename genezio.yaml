@@ -1,0 +1,14 @@
+backend:
+    functions:
+        - entry: bot.py
+          handler: handler
+          name: serverless
+          path: .
+          type: aws
+    language:
+        name: python
+        packageManager: pip
+    path: .
+name: sapphire-available-penguin
+region: us-east-1
+yamlVersion: 2
